@@ -38,4 +38,17 @@ public class JwtService {
     public Instant getExpirationInstant() {
         return Instant.now().plusMillis(expirationMillis);
     }
+
+    public String validateTokenAndGetUsername(String token) {
+        return JWT.require(algorithm)
+                .withIssuer(issuer)
+                .build()
+                .verify(token)
+                .getSubject();
+    }
+
+    public boolean isTokenValid(String token, UserDetails userDetails) {
+        String username = validateTokenAndGetUsername(token);
+        return username.equals(userDetails.getUsername());
+    }
 }
