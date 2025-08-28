@@ -12,3 +12,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+server:
+  port: 8081
+
+security:
+    jwt:
+        secret: mysecretkey
+        expiration: 3600000 # 1 hour in milliseconds
+        issuer: tienda-hibrida
