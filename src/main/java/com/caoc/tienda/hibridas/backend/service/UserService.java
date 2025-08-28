@@ -6,6 +6,7 @@ import com.caoc.tienda.hibridas.backend.repository.entities.UserEntity;
 import com.caoc.tienda.hibridas.backend.repository.mapper.UserMapper;
 import com.caoc.tienda.hibridas.backend.service.dto.UserDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,7 @@ public class UserService {
 
     private final IUserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public UserDto save(UserDto userDto) {
         userRepository.findByEmail(userDto.getEmail())
@@ -22,13 +24,9 @@ public class UserService {
                 .ifPresent(user -> {
                     throw new EmailUseException("El email ya está en uso");
                 });
-        UserEntity user = userRepository.save(userMapper.toEntity(userDto));
+        UserEntity toSave = userMapper.toEntity(userDto);
+        toSave.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        UserEntity user = userRepository.save(toSave);
         return userMapper.toDto(user);
-    }
-
-    public UserDto login(UserDto userDto) {
-        return userRepository.findByEmailAndPassword(userDto.getEmail(), userDto.getPassword())
-                .map(userMapper::toDto)
-                .orElse(null);
     }
 }
