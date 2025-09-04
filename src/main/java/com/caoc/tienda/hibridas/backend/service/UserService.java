@@ -1,5 +1,6 @@
 package com.caoc.tienda.hibridas.backend.service;
 
+import com.caoc.tienda.hibridas.backend.exception.EmailNotFoundException;
 import com.caoc.tienda.hibridas.backend.exception.EmailUseException;
 import com.caoc.tienda.hibridas.backend.repository.IUserRepository;
 import com.caoc.tienda.hibridas.backend.repository.entities.UserEntity;
@@ -28,5 +29,12 @@ public class UserService {
         toSave.setPassword(passwordEncoder.encode(userDto.getPassword()));
         UserEntity user = userRepository.save(toSave);
         return userMapper.toDto(user);
+    }
+
+    public void findByEmail(String email) {
+        userRepository.findByEmail(email)
+                .stream()
+                .findFirst()
+                .orElseThrow(() -> new EmailNotFoundException("El correo no está registrado"));
     }
 }

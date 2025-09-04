@@ -40,6 +40,10 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> loginUser(@RequestBody AuthRequest authRequest) {
+
+        //Validar si el usuario existe
+        userService.findByEmail(authRequest.getEmail());
+
         // 1. Utilizar el AuthenticationManager para autenticar al usuario
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword())
