@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**","/actuator/**", "/api/product")
+                        .requestMatchers("/api/auth/**","/actuator/**")
                         .permitAll()
                         .anyRequest().authenticated()
                 )
