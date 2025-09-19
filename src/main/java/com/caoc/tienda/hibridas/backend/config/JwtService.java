@@ -2,7 +2,6 @@ package com.caoc.tienda.hibridas.backend.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.caoc.tienda.hibridas.backend.repository.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
