@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
 
@@ -18,10 +19,10 @@ public class JwtService {
     private final String issuer;
 
     public JwtService(@Value("${security.jwt.secret}") String secret,
-                      @Value("${security.jwt.expiration}") long expirationMillis,
+                      @Value("${security.jwt.expiration}") long expirationHours,
                       @Value("${security.jwt.issuer}") String issuer) {
         this.algorithm = Algorithm.HMAC256(secret);
-        this.expirationMillis = expirationMillis;
+        this.expirationMillis = Duration.ofHours(expirationHours).toMillis();
         this.issuer = issuer;
     }
 

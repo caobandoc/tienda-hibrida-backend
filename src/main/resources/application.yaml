@@ -18,5 +18,5 @@ server:
 security:
   jwt:
     secret: ${JWT_SECRET:mysecretkey}
-    expiration: 3600000
+    expiration: 24
     issuer: tienda-hibrida
